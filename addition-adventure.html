@@ -304,6 +304,82 @@
             display: none !important;
         }
 
+        /* Report Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 450px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .report-content {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-family: 'Nunito', sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44bd32);
+            color: white;
+        }
+
+        .email-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .close-btn {
+            background: #e0e0e0;
+            color: #333;
+        }
+
         .level-indicator {
             text-align: center;
             margin-bottom: 10px;
@@ -491,7 +567,23 @@
             <div>out of <span id="total-questions">10</span> correct!</div>
             <div class="final-stars" id="final-stars"></div>
             <div class="end-message" id="end-message"></div>
-            <button class="restart-btn" onclick="startGame()">PLAY AGAIN!</button>
+            <div>
+                <button class="restart-btn" onclick="startGame()">PLAY AGAIN!</button>
+                <button class="restart-btn" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 1rem; padding: 12px 25px; margin-left: 10px;" onclick="showReport()">📊 Send Report</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="report-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-title">📊 Progress Report</div>
+            <div class="report-content" id="report-content"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn copy-btn" onclick="copyReport()">📋 Copy</button>
+                <button class="modal-btn email-btn" onclick="emailReport()">📧 Email</button>
+                <button class="modal-btn close-btn" onclick="closeReport()">Close</button>
+            </div>
         </div>
     </div>
 
@@ -503,6 +595,8 @@
         let currentLevel = 1;
         let answered = false;
         let stars = [];
+        let startTime = null;
+        let questionHistory = [];
 
         const objects = ['🍎', '🌟', '🐱', '🐶', '🌸', '🎈', '🍪', '🧁', '🦋', '🐠'];
 
@@ -604,7 +698,7 @@
                 const btn = document.createElement('button');
                 btn.className = 'answer-btn';
                 btn.textContent = answer;
-                btn.onclick = () => checkAnswer(answer, question.correctAnswer, btn);
+                btn.onclick = () => checkAnswer(answer, question.correctAnswer, btn, question);
                 answersContainer.appendChild(btn);
             });
 
@@ -613,11 +707,19 @@
             answered = false;
         }
 
-        function checkAnswer(selected, correct, btn) {
+        function checkAnswer(selected, correct, btn, question) {
             if (answered) return;
             answered = true;
 
-            if (selected === correct) {
+            const isCorrect = selected === correct;
+            questionHistory.push({
+                problem: question ? `${question.num1} + ${question.num2}` : 'Unknown',
+                correct: isCorrect,
+                userAnswer: selected,
+                correctAnswer: correct
+            });
+
+            if (isCorrect) {
                 btn.classList.add('correct');
                 score++;
                 stars.push('⭐');
@@ -664,6 +766,8 @@
             currentLevel = 1;
             stars = [];
             answered = false;
+            startTime = new Date();
+            questionHistory = [];
 
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('end-screen').classList.add('hidden');
@@ -704,6 +808,74 @@
 
             document.getElementById('end-message').textContent = message;
         }
+
+        function generateReportText() {
+            const endTime = new Date();
+            const duration = Math.round((endTime - startTime) / 1000);
+            const accuracy = Math.round((score / totalQuestions) * 100);
+
+            let report = `📊 MATH GAME PROGRESS REPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎮 Game: Addition Adventure
+📅 Date: ${new Date().toLocaleDateString()}
+⏱️ Time: ${Math.floor(duration / 60)}m ${duration % 60}s
+
+📈 OVERALL RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Score: ${score}/${totalQuestions} (${accuracy}%)
+⭐ Stars Earned: ${score}`;
+
+            const missed = questionHistory.filter(q => !q.correct);
+            if (missed.length > 0) {
+                report += `\n\n❌ QUESTIONS TO REVIEW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+                missed.forEach(q => {
+                    report += `\n• ${q.problem} = ?`;
+                    report += `\n  Answered: ${q.userAnswer} → Correct: ${q.correctAnswer}`;
+                });
+            }
+
+            report += `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌟 Mr. Gunther's Math Games
+https://ydgunz.github.io/fraction-frenzy/`;
+
+            return report;
+        }
+
+        function showReport() {
+            document.getElementById('report-content').textContent = generateReportText();
+            document.getElementById('report-modal').classList.remove('hidden');
+        }
+
+        function closeReport() {
+            document.getElementById('report-modal').classList.add('hidden');
+        }
+
+        function copyReport() {
+            const report = generateReportText();
+            navigator.clipboard.writeText(report).then(() => {
+                alert('Report copied to clipboard!');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = report;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('Report copied to clipboard!');
+            });
+        }
+
+        function emailReport() {
+            const report = generateReportText();
+            const subject = encodeURIComponent(`Math Progress Report - Addition Adventure - ${new Date().toLocaleDateString()}`);
+            const body = encodeURIComponent(report);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        document.getElementById('report-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeReport();
+        });
     </script>
 </body>
 </html>

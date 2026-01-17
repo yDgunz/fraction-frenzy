@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Subtraction Showdown - Mr. Gunther's Math Games</title>
+    <title>Aunt Kiki's Kitchen - Mr. Gunther's Math Games</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap');
 
@@ -21,7 +21,7 @@
             align-items: center;
             padding: 10px;
             overflow-y: auto;
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
         }
 
         .game-container {
@@ -31,12 +31,12 @@
             max-width: 500px;
             width: 100%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            border: 4px solid #ff9f43;
+            border: 4px solid #88d8b0;
         }
 
         .back-link {
             display: inline-block;
-            color: #ff9f43;
+            color: #88d8b0;
             text-decoration: none;
             font-weight: 800;
             font-size: 0.9rem;
@@ -53,7 +53,7 @@
             font-weight: 800;
             margin-bottom: 5px;
             color: #1a1a2e;
-            text-shadow: 2px 2px 0px #feca57;
+            text-shadow: 2px 2px 0px #88d8b0;
         }
 
         .subtitle {
@@ -66,10 +66,10 @@
         .stats {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 25px;
             margin-bottom: 20px;
             padding: 12px;
-            background: linear-gradient(135deg, #ff9f43 0%, #feca57 100%);
+            background: linear-gradient(135deg, #88d8b0 0%, #a8e6cf 100%);
             border-radius: 15px;
         }
 
@@ -79,13 +79,13 @@
         }
 
         .stat-value {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
             text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
         }
 
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             opacity: 0.9;
@@ -93,8 +93,8 @@
 
         .streak-display {
             text-align: center;
-            margin-bottom: 15px;
-            min-height: 30px;
+            margin-bottom: 12px;
+            min-height: 28px;
         }
 
         .streak-badge {
@@ -102,7 +102,7 @@
             padding: 5px 15px;
             border-radius: 15px;
             font-weight: 800;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             background: linear-gradient(135deg, #ff6b6b, #feca57);
             color: white;
             animation: pulse 0.5s ease-in-out infinite alternate;
@@ -113,86 +113,58 @@
             to { transform: scale(1.05); }
         }
 
-        .level-indicator {
+        .topic-badge {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
-        .level-badge {
+        .topic-label {
             display: inline-block;
             padding: 5px 15px;
             background: #f0f0f0;
             border-radius: 15px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 800;
             color: #666;
         }
 
-        .problem-area {
+        .question-area {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 15px;
         }
 
-        .vertical-problem {
-            display: inline-block;
-            text-align: right;
-            font-size: 2.8rem;
+        .story-text {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .story-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .math-problem {
+            font-size: 1.8rem;
             font-weight: 800;
             color: #1a1a2e;
-            background: #f8f9fa;
-            padding: 20px 30px;
-            border-radius: 15px;
-            font-family: 'Courier New', monospace;
-            position: relative;
-        }
-
-        .problem-row {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .minus-sign {
-            color: #ff9f43;
-            margin-right: 10px;
-        }
-
-        .problem-line {
-            border-bottom: 4px solid #1a1a2e;
-            margin: 10px 0;
-        }
-
-        .answer-row {
-            color: #ff9f43;
-            letter-spacing: 5px;
-        }
-
-        .borrow-hint {
-            text-align: center;
-            margin-bottom: 15px;
-            min-height: 25px;
-        }
-
-        .hint-text {
-            display: inline-block;
-            padding: 5px 15px;
-            background: #fff3cd;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            color: #856404;
-            font-weight: 600;
+            margin: 15px 0;
         }
 
         .answers {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .answer-btn {
-            padding: 18px;
-            font-size: 1.8rem;
+            padding: 15px 10px;
+            font-size: 1.2rem;
             font-weight: 800;
             border: 3px solid #e0e0e0;
             border-radius: 15px;
@@ -204,9 +176,9 @@
         }
 
         .answer-btn:hover {
-            border-color: #ff9f43;
+            border-color: #88d8b0;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 159, 67, 0.3);
+            box-shadow: 0 8px 25px rgba(136, 216, 176, 0.3);
         }
 
         .answer-btn:active {
@@ -229,23 +201,23 @@
 
         @keyframes correctPop {
             0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-10px); }
-            40% { transform: translateX(10px); }
-            60% { transform: translateX(-10px); }
-            80% { transform: translateX(10px); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-8px); }
+            80% { transform: translateX(8px); }
         }
 
         .feedback {
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 800;
-            min-height: 40px;
+            min-height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -264,12 +236,12 @@
         }
 
         .instructions {
-            background: linear-gradient(135deg, #fff5eb 0%, #ffffff 100%);
+            background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%);
             padding: 20px;
             border-radius: 15px;
             margin: 20px 0;
             text-align: left;
-            border-left: 5px solid #ff9f43;
+            border-left: 5px solid #88d8b0;
         }
 
         .instructions h3 {
@@ -285,34 +257,42 @@
 
         .instructions li {
             margin: 10px 0;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
-        .start-btn, .restart-btn {
-            background: linear-gradient(135deg, #ff9f43, #feca57);
+        .start-btn, .restart-btn, .report-btn {
+            background: linear-gradient(135deg, #88d8b0, #a8e6cf);
             color: #1a1a2e;
             border: none;
-            padding: 18px 50px;
-            font-size: 1.4rem;
+            padding: 16px 45px;
+            font-size: 1.3rem;
             font-weight: 800;
             border-radius: 30px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 15px;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(255, 159, 67, 0.4);
+            box-shadow: 0 8px 25px rgba(136, 216, 176, 0.4);
             font-family: 'Nunito', sans-serif;
         }
 
-        .start-btn:hover, .restart-btn:hover {
+        .start-btn:hover, .restart-btn:hover, .report-btn:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 159, 67, 0.5);
+            box-shadow: 0 15px 40px rgba(136, 216, 176, 0.5);
+        }
+
+        .report-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 1rem;
+            padding: 12px 30px;
+            margin-left: 10px;
         }
 
         .final-score {
             font-size: 4rem;
             font-weight: 800;
-            color: #ff9f43;
-            text-shadow: 3px 3px 0px #feca57;
+            color: #88d8b0;
+            text-shadow: 3px 3px 0px #a8e6cf;
             animation: scoreReveal 0.5s ease-out;
         }
 
@@ -323,8 +303,8 @@
         }
 
         .end-message {
-            font-size: 1.3rem;
-            margin: 20px 0;
+            font-size: 1.2rem;
+            margin: 15px 0;
             color: #1a1a2e;
             font-weight: 800;
         }
@@ -347,6 +327,7 @@
             z-index: 1000;
             padding: 20px;
         }
+
         .modal-content {
             background: white;
             border-radius: 20px;
@@ -356,6 +337,7 @@
             max-height: 80vh;
             overflow-y: auto;
         }
+
         .modal-title {
             font-size: 1.4rem;
             font-weight: 800;
@@ -363,22 +345,25 @@
             margin-bottom: 15px;
             text-align: center;
         }
+
         .report-content {
             background: #f8f9fa;
             padding: 15px;
             border-radius: 10px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             line-height: 1.6;
             white-space: pre-wrap;
             font-family: 'Nunito', sans-serif;
             margin-bottom: 15px;
         }
+
         .modal-buttons {
             display: flex;
             gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
         }
+
         .modal-btn {
             padding: 12px 25px;
             border: none;
@@ -388,9 +373,21 @@
             cursor: pointer;
             font-family: 'Nunito', sans-serif;
         }
-        .copy-btn { background: linear-gradient(135deg, #4ecdc4, #44bd32); color: white; }
-        .email-btn { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-        .close-btn { background: #e0e0e0; color: #333; }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44bd32);
+            color: white;
+        }
+
+        .email-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .close-btn {
+            background: #e0e0e0;
+            color: #333;
+        }
 
         /* Mobile */
         @media (max-width: 480px) {
@@ -401,7 +398,7 @@
             }
 
             .game-container {
-                padding: 15px;
+                padding: 12px;
                 border-radius: 20px;
             }
 
@@ -410,46 +407,63 @@
             }
 
             .subtitle {
-                font-size: 0.85rem;
-                margin-bottom: 15px;
+                font-size: 0.8rem;
+                margin-bottom: 12px;
             }
 
             .stats {
                 padding: 10px;
-                gap: 20px;
-                margin-bottom: 15px;
+                gap: 15px;
+                margin-bottom: 12px;
             }
 
             .stat-value {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
             }
 
             .stat-label {
-                font-size: 0.6rem;
+                font-size: 0.55rem;
             }
 
-            .vertical-problem {
-                font-size: 2.2rem;
-                padding: 15px 25px;
+            .question-area {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .story-text {
+                font-size: 0.9rem;
+            }
+
+            .story-emoji {
+                font-size: 2rem;
+            }
+
+            .math-problem {
+                font-size: 1.4rem;
             }
 
             .answers {
-                gap: 10px;
+                gap: 8px;
             }
 
             .answer-btn {
-                padding: 14px;
-                font-size: 1.5rem;
+                padding: 12px 8px;
+                font-size: 1rem;
             }
 
             .feedback {
-                font-size: 1.2rem;
-                min-height: 35px;
+                font-size: 1.1rem;
+                min-height: 30px;
             }
 
             .start-btn, .restart-btn {
-                padding: 15px 40px;
-                font-size: 1.2rem;
+                padding: 14px 35px;
+                font-size: 1.1rem;
+            }
+
+            .report-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
             }
 
             .instructions {
@@ -457,7 +471,7 @@
             }
 
             .instructions li {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
 
             .final-score {
@@ -465,10 +479,14 @@
             }
 
             .end-message {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
 
-            .hint-text {
+            .modal-content {
+                padding: 20px;
+            }
+
+            .report-content {
                 font-size: 0.8rem;
             }
         }
@@ -479,27 +497,27 @@
         <!-- Start Screen -->
         <div id="start-screen" class="start-screen">
             <a href="index.html" class="back-link">← Back to Games</a>
-            <h1 class="game-title">Subtraction Showdown!</h1>
-            <p class="subtitle">Master subtraction with borrowing!</p>
+            <h1 class="game-title">Aunt Kiki's Kitchen!</h1>
+            <p class="subtitle">Help Aunt Kiki with math in the kitchen! 👩‍🍳</p>
 
             <div class="instructions">
-                <h3>🎮 How to Play:</h3>
+                <h3>🍳 How to Play:</h3>
                 <ul>
-                    <li>📝 Solve subtraction problems</li>
-                    <li>🔢 Some need borrowing (regrouping)!</li>
-                    <li>🎯 Pick the correct answer</li>
-                    <li>🔥 Build a streak for bonus points!</li>
-                    <li>🏆 Answer 10 questions to win!</li>
+                    <li>✖️ Practice multiplication facts (up to 12×12)</li>
+                    <li>➗ Practice division facts (up to 144÷12)</li>
+                    <li>🍰 Help Aunt Kiki in the kitchen!</li>
+                    <li>🔥 Build streaks for bonus points!</li>
+                    <li>🏆 Answer 12 questions to complete!</li>
                 </ul>
             </div>
 
-            <button class="start-btn" onclick="startGame()">LET'S GO!</button>
+            <button class="start-btn" onclick="startGame()">START COOKING!</button>
         </div>
 
         <!-- Game Screen -->
         <div id="game-screen" class="hidden">
             <a href="index.html" class="back-link">← Back to Games</a>
-            <h1 class="game-title">Subtraction Showdown!</h1>
+            <h1 class="game-title">Aunt Kiki's Kitchen!</h1>
 
             <div class="stats">
                 <div class="stat">
@@ -507,7 +525,7 @@
                     <div class="stat-label">Correct</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value" id="remaining">10</div>
+                    <div class="stat-value" id="remaining">12</div>
                     <div class="stat-label">To Go</div>
                 </div>
                 <div class="stat">
@@ -518,14 +536,14 @@
 
             <div class="streak-display" id="streak-display"></div>
 
-            <div class="level-indicator">
-                <span class="level-badge" id="level-badge">Level 1: No Borrowing</span>
+            <div class="topic-badge">
+                <span class="topic-label" id="topic-label">Decimals</span>
             </div>
 
-            <div class="borrow-hint" id="borrow-hint"></div>
-
-            <div class="problem-area">
-                <div class="vertical-problem" id="vertical-problem"></div>
+            <div class="question-area">
+                <div class="story-emoji" id="story-emoji">🍰</div>
+                <div class="story-text" id="story-text"></div>
+                <div class="math-problem" id="math-problem"></div>
             </div>
 
             <div class="answers" id="answers"></div>
@@ -536,18 +554,19 @@
         <!-- End Screen -->
         <div id="end-screen" class="end-screen hidden">
             <a href="index.html" class="back-link">← Back to Games</a>
-            <h1 class="game-title">Great Work!</h1>
-            <div class="final-score" id="final-score">10</div>
-            <div>out of <span id="total-questions">10</span> correct!</div>
+            <h1 class="game-title">Kitchen Closed!</h1>
+            <div class="final-score" id="final-score">0</div>
+            <div>out of <span id="total-questions">12</span> correct!</div>
             <div class="end-message" id="end-message"></div>
-            <div id="stats-summary" style="margin: 15px 0; color: #666;"></div>
+            <div id="stats-summary" style="margin: 15px 0; color: #666; font-size: 0.9rem;"></div>
             <div>
-                <button class="restart-btn" onclick="startGame()">PLAY AGAIN!</button>
-                <button class="restart-btn" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 1rem; padding: 12px 25px; margin-left: 10px;" onclick="showReport()">📊 Send Report</button>
+                <button class="restart-btn" onclick="startGame()">COOK AGAIN!</button>
+                <button class="report-btn" onclick="showReport()">📊 Send Report</button>
             </div>
         </div>
     </div>
 
+    <!-- Report Modal -->
     <div id="report-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-title">📊 Progress Report</div>
@@ -564,13 +583,15 @@
         // Game state
         let score = 0;
         let questionsAnswered = 0;
-        let totalQuestions = 10;
+        let totalQuestions = 12;
         let streak = 0;
         let maxStreak = 0;
-        let currentLevel = 1;
         let answered = false;
         let startTime = null;
         let questionHistory = [];
+
+        const topics = ['decimals', 'fractions', 'multiply', 'divide'];
+        const emojis = ['🍰', '🧁', '🍪', '🥧', '🍕', '🥗', '🍝', '🥘', '🍲', '🥞'];
 
         function randomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -584,158 +605,136 @@
             return array;
         }
 
-        function needsBorrowing(top, bottom) {
-            const topStr = top.toString().padStart(2, '0');
-            const bottomStr = bottom.toString().padStart(2, '0');
-            // Check if any digit in bottom > corresponding digit in top
-            return parseInt(topStr[1]) < parseInt(bottomStr[1]);
+        function roundTo(num, places) {
+            return Math.round(num * Math.pow(10, places)) / Math.pow(10, places);
         }
 
-        function generateQuestion() {
-            let top, bottom, requiresBorrow;
+        function generateMultiplication() {
+            const num1 = randomInt(2, 12);
+            const num2 = randomInt(2, 12);
+            const correct = num1 * num2;
 
-            // Level 1: No borrowing (first few questions)
-            // Level 2: Sometimes borrowing
-            // Level 3: Often borrowing, bigger numbers
+            const items = ['cookies', 'cupcakes', 'muffins', 'pancakes', 'donuts', 'brownies'];
+            const item = items[randomInt(0, items.length - 1)];
 
-            if (score < 3) {
-                // Level 1: Simple, no borrowing
-                currentLevel = 1;
-                const tens = randomInt(2, 5);
-                const topOnes = randomInt(5, 9);
-                const bottomOnes = randomInt(1, topOnes - 1);
-                const bottomTens = randomInt(1, tens - 1);
-                top = tens * 10 + topOnes;
-                bottom = bottomTens * 10 + bottomOnes;
-                requiresBorrow = false;
-            } else if (score < 6) {
-                // Level 2: Mix of borrowing and non-borrowing
-                currentLevel = 2;
-                if (randomInt(0, 1) === 0) {
-                    // No borrow
-                    const tens = randomInt(3, 7);
-                    const topOnes = randomInt(5, 9);
-                    const bottomOnes = randomInt(1, topOnes - 1);
-                    const bottomTens = randomInt(1, tens - 1);
-                    top = tens * 10 + topOnes;
-                    bottom = bottomTens * 10 + bottomOnes;
-                    requiresBorrow = false;
-                } else {
-                    // Requires borrowing
-                    const tens = randomInt(3, 7);
-                    const topOnes = randomInt(0, 4);
-                    const bottomOnes = randomInt(topOnes + 1, 9);
-                    const bottomTens = randomInt(1, tens - 2);
-                    top = tens * 10 + topOnes;
-                    bottom = bottomTens * 10 + bottomOnes;
-                    requiresBorrow = true;
-                }
-            } else {
-                // Level 3: More borrowing, bigger numbers
-                currentLevel = 3;
-                if (randomInt(0, 2) === 0) {
-                    // No borrow (occasional)
-                    const tens = randomInt(5, 9);
-                    const topOnes = randomInt(5, 9);
-                    const bottomOnes = randomInt(1, topOnes - 1);
-                    const bottomTens = randomInt(2, tens - 1);
-                    top = tens * 10 + topOnes;
-                    bottom = bottomTens * 10 + bottomOnes;
-                    requiresBorrow = false;
-                } else {
-                    // Requires borrowing
-                    const tens = randomInt(4, 9);
-                    const topOnes = randomInt(0, 5);
-                    const bottomOnes = randomInt(topOnes + 1, 9);
-                    const bottomTens = randomInt(1, tens - 2);
-                    top = tens * 10 + topOnes;
-                    bottom = bottomTens * 10 + bottomOnes;
-                    requiresBorrow = true;
-                }
-            }
-
-            const correctAnswer = top - bottom;
-
-            // Generate wrong answers
-            let wrongAnswers = new Set();
-            // Common mistake: forgetting to borrow (if borrowing needed)
-            if (requiresBorrow) {
-                const topOnes = top % 10;
-                const bottomOnes = bottom % 10;
-                const wrongOnesResult = bottomOnes - topOnes; // backwards subtraction
-                const tensResult = Math.floor(top / 10) - Math.floor(bottom / 10);
-                const commonMistake = tensResult * 10 + wrongOnesResult;
-                if (commonMistake > 0 && commonMistake !== correctAnswer) {
-                    wrongAnswers.add(commonMistake);
-                }
-            }
-
-            while (wrongAnswers.size < 3) {
-                let wrong = correctAnswer + randomInt(-10, 10);
-                if (wrong !== correctAnswer && wrong > 0 && wrong < 100) {
-                    wrongAnswers.add(wrong);
-                }
-            }
-
-            const allAnswers = shuffleArray([correctAnswer, ...Array.from(wrongAnswers).slice(0, 3)]);
+            const stories = [
+                `Aunt Kiki bakes ${num1} trays with ${num2} ${item} each. How many ${item} total?`,
+                `There are ${num1} boxes with ${num2} ${item} in each box. How many altogether?`,
+                `Aunt Kiki makes ${num1} batches of ${num2} ${item}. What's the total?`,
+                `Each plate gets ${num2} ${item}. If there are ${num1} plates, how many ${item} does Aunt Kiki need?`
+            ];
 
             return {
-                top,
-                bottom,
-                correctAnswer,
-                requiresBorrow,
-                answers: allAnswers
+                topic: 'Multiplication',
+                emoji: emojis[randomInt(0, emojis.length - 1)],
+                story: stories[randomInt(0, stories.length - 1)],
+                problem: `${num1} × ${num2} = ?`,
+                correct: correct,
+                wrongAnswers: generateWrongIntegers(correct)
             };
         }
 
-        function updateLevelDisplay() {
-            const badge = document.getElementById('level-badge');
-            switch(currentLevel) {
-                case 1:
-                    badge.textContent = 'Level 1: No Borrowing';
-                    break;
-                case 2:
-                    badge.textContent = 'Level 2: Sometimes Borrowing';
-                    break;
-                case 3:
-                    badge.textContent = 'Level 3: Challenge Mode!';
-                    break;
+        function generateDivision() {
+            const divisor = randomInt(2, 12);
+            const quotient = randomInt(2, 12);
+            const dividend = divisor * quotient;
+
+            const items = ['cookies', 'cupcakes', 'slices', 'pieces', 'muffins', 'candies'];
+            const item = items[randomInt(0, items.length - 1)];
+
+            const stories = [
+                `Aunt Kiki has ${dividend} ${item} to share equally among ${divisor} friends. How many each?`,
+                `${dividend} ${item} go into ${divisor} bags equally. How many per bag?`,
+                `Aunt Kiki puts ${dividend} ${item} onto ${divisor} plates evenly. How many on each plate?`,
+                `There are ${dividend} ${item} for ${divisor} kids to split fairly. Each kid gets how many?`
+            ];
+
+            return {
+                topic: 'Division',
+                emoji: emojis[randomInt(0, emojis.length - 1)],
+                story: stories[randomInt(0, stories.length - 1)],
+                problem: `${dividend} ÷ ${divisor} = ?`,
+                correct: quotient,
+                wrongAnswers: generateWrongIntegers(quotient)
+            };
+        }
+
+        function generateMissingFactor() {
+            const num1 = randomInt(2, 12);
+            const num2 = randomInt(2, 12);
+            const product = num1 * num2;
+
+            const stories = [
+                `Aunt Kiki has ${product} cookies arranged in ${num1} equal rows. How many in each row?`,
+                `${product} muffins fill ${num1} trays evenly. How many per tray?`,
+                `Aunt Kiki needs ${product} cupcakes. She can fit ${num1} per batch. How many batches?`
+            ];
+
+            return {
+                topic: 'Missing Factor',
+                emoji: emojis[randomInt(0, emojis.length - 1)],
+                story: stories[randomInt(0, stories.length - 1)],
+                problem: `${num1} × ? = ${product}`,
+                correct: num2,
+                wrongAnswers: generateWrongIntegers(num2)
+            };
+        }
+
+        function generateWrongIntegers(correct) {
+            let wrong = new Set();
+            // Add common mistakes
+            if (correct > 10) {
+                wrong.add(correct + 10);
+                wrong.add(correct - 10);
             }
+            wrong.add(correct + 1);
+            wrong.add(correct - 1);
+            wrong.add(correct + 2);
+            wrong.add(correct - 2);
+
+            // Filter and get 3 valid wrong answers
+            const filtered = Array.from(wrong).filter(w => w !== correct && w > 0);
+            while (filtered.length < 3) {
+                const w = correct + randomInt(-12, 12);
+                if (w !== correct && w > 0 && !filtered.includes(w)) {
+                    filtered.push(w);
+                }
+            }
+            return shuffleArray(filtered).slice(0, 3);
+        }
+
+        function generateQuestion() {
+            const types = [
+                generateMultiplication,
+                generateMultiplication,
+                generateDivision,
+                generateDivision,
+                generateMissingFactor
+            ];
+            return types[randomInt(0, types.length - 1)]();
         }
 
         function displayQuestion(question) {
-            // Vertical problem display
-            const problemEl = document.getElementById('vertical-problem');
-            problemEl.innerHTML = `
-                <div class="problem-row">${question.top}</div>
-                <div class="problem-row"><span class="minus-sign">−</span>${question.bottom}</div>
-                <div class="problem-line"></div>
-                <div class="problem-row answer-row">??</div>
-            `;
+            document.getElementById('topic-label').textContent = question.topic;
+            document.getElementById('story-emoji').textContent = question.emoji;
+            document.getElementById('story-text').textContent = question.story;
+            document.getElementById('math-problem').textContent = question.problem;
 
-            // Hint for borrowing
-            const hintEl = document.getElementById('borrow-hint');
-            if (question.requiresBorrow) {
-                hintEl.innerHTML = '<span class="hint-text">💡 This one needs borrowing!</span>';
-            } else {
-                hintEl.innerHTML = '';
-            }
+            const allAnswers = shuffleArray([question.correct, ...question.wrongAnswers]);
 
-            // Answers
             const answersContainer = document.getElementById('answers');
             answersContainer.innerHTML = '';
 
-            question.answers.forEach(answer => {
+            allAnswers.forEach(answer => {
                 const btn = document.createElement('button');
                 btn.className = 'answer-btn';
                 btn.textContent = answer;
-                btn.onclick = () => checkAnswer(answer, question.correctAnswer, btn, question);
+                btn.onclick = () => checkAnswer(answer, question.correct, btn, question);
                 answersContainer.appendChild(btn);
             });
 
             document.getElementById('feedback').textContent = '';
             document.getElementById('feedback').className = 'feedback';
-            updateLevelDisplay();
             answered = false;
         }
 
@@ -743,23 +742,15 @@
             if (answered) return;
             answered = true;
 
-            const isCorrect = selected === correct;
+            const isCorrect = String(selected) === String(correct);
+
             questionHistory.push({
-                problem: `${question.top} - ${question.bottom}`,
-                needsBorrow: question.requiresBorrow,
+                topic: question.topic,
+                problem: question.problem,
                 correct: isCorrect,
                 userAnswer: selected,
                 correctAnswer: correct
             });
-
-            // Show the answer in the problem
-            const problemEl = document.getElementById('vertical-problem');
-            problemEl.innerHTML = `
-                <div class="problem-row">${question.top}</div>
-                <div class="problem-row"><span class="minus-sign">−</span>${question.bottom}</div>
-                <div class="problem-line"></div>
-                <div class="problem-row answer-row">${correct}</div>
-            `;
 
             if (isCorrect) {
                 btn.classList.add('correct');
@@ -768,19 +759,18 @@
                 if (streak > maxStreak) maxStreak = streak;
                 document.getElementById('feedback').textContent = getPositiveFeedback();
                 document.getElementById('feedback').className = 'feedback correct';
-                updateStreakDisplay();
             } else {
                 btn.classList.add('incorrect');
                 streak = 0;
-                document.getElementById('feedback').textContent = `The answer is ${correct}`;
+                document.getElementById('feedback').textContent = `It's ${correct}!`;
                 document.getElementById('feedback').className = 'feedback incorrect';
-                updateStreakDisplay();
             }
 
             questionsAnswered++;
             document.getElementById('score').textContent = score;
             document.getElementById('remaining').textContent = Math.max(0, totalQuestions - questionsAnswered);
             document.getElementById('streak').textContent = streak;
+            updateStreakDisplay();
 
             setTimeout(() => {
                 if (questionsAnswered < totalQuestions) {
@@ -788,13 +778,13 @@
                 } else {
                     endGame();
                 }
-            }, 1500);
+            }, 1200);
         }
 
         function updateStreakDisplay() {
             const streakDisplay = document.getElementById('streak-display');
             if (streak >= 5) {
-                streakDisplay.innerHTML = '<span class="streak-badge">🔥🔥 UNSTOPPABLE! 🔥🔥</span>';
+                streakDisplay.innerHTML = '<span class="streak-badge">🔥🔥 MASTER CHEF! 🔥🔥</span>';
             } else if (streak >= 3) {
                 streakDisplay.innerHTML = '<span class="streak-badge">🔥 ON FIRE!</span>';
             } else {
@@ -804,13 +794,13 @@
 
         function getPositiveFeedback() {
             const messages = [
-                "Great job! 🎉",
-                "You got it! ⭐",
-                "Awesome! 🌟",
-                "Super! 💪",
-                "Correct! 🎈",
-                "Perfect! ✨",
-                "Yes! 🙌",
+                "Delicious! 🎉",
+                "Perfect! ⭐",
+                "Yummy! 🌟",
+                "Tasty math! 💪",
+                "Chef's kiss! 😘",
+                "Wonderful! ✨",
+                "Superb! 🙌",
                 "Amazing! 🌈"
             ];
             return messages[Math.floor(Math.random() * messages.length)];
@@ -821,7 +811,6 @@
             questionsAnswered = 0;
             streak = 0;
             maxStreak = 0;
-            currentLevel = 1;
             answered = false;
             startTime = new Date();
             questionHistory = [];
@@ -845,33 +834,45 @@
             document.getElementById('final-score').textContent = score;
             document.getElementById('total-questions').textContent = totalQuestions;
 
+            const accuracy = Math.round((score / totalQuestions) * 100);
+
             let message = '';
             if (score === totalQuestions) {
-                message = "🏆 PERFECT SCORE! Subtraction master! 🏆";
+                message = "🏆 PERFECT! You're a Kitchen Math Master! 👨‍🍳";
+            } else if (score >= 10) {
+                message = "🌟 Excellent! Aunt Kiki is proud of you!";
             } else if (score >= 8) {
-                message = "🌟 Excellent work! You're almost there!";
+                message = "😊 Great cooking! Keep practicing!";
             } else if (score >= 6) {
-                message = "😊 Good job! Keep practicing!";
-            } else if (score >= 4) {
-                message = "👍 Nice effort! Try again!";
+                message = "👍 Good effort! Try again!";
             } else {
-                message = "💪 Keep practicing! You'll improve!";
+                message = "💪 Keep practicing in the kitchen!";
             }
 
             document.getElementById('end-message').textContent = message;
-            document.getElementById('stats-summary').innerHTML = `🔥 Best streak: ${maxStreak}`;
+            document.getElementById('stats-summary').innerHTML = `
+                ${accuracy}% accuracy · Best streak: ${maxStreak} 🔥
+            `;
         }
 
         function generateReportText() {
             const endTime = new Date();
             const duration = Math.round((endTime - startTime) / 1000);
             const accuracy = Math.round((score / totalQuestions) * 100);
-            const borrowingQs = questionHistory.filter(q => q.needsBorrow);
-            const borrowingCorrect = borrowingQs.filter(q => q.correct).length;
+
+            // Count by topic
+            const topicStats = {};
+            questionHistory.forEach(q => {
+                if (!topicStats[q.topic]) {
+                    topicStats[q.topic] = { correct: 0, total: 0 };
+                }
+                topicStats[q.topic].total++;
+                if (q.correct) topicStats[q.topic].correct++;
+            });
 
             let report = `📊 MATH GAME PROGRESS REPORT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎮 Game: Subtraction Showdown
+🎮 Game: Aunt Kiki's Kitchen
 📅 Date: ${new Date().toLocaleDateString()}
 ⏱️ Time: ${Math.floor(duration / 60)}m ${duration % 60}s
 
@@ -880,16 +881,21 @@
 ✅ Score: ${score}/${totalQuestions} (${accuracy}%)
 🔥 Best Streak: ${maxStreak}
 
-📚 BORROWING PROBLEMS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Borrowing questions: ${borrowingCorrect}/${borrowingQs.length} correct`;
+📚 PERFORMANCE BY TOPIC
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
+            for (const [topic, stats] of Object.entries(topicStats)) {
+                const pct = Math.round((stats.correct / stats.total) * 100);
+                report += `\n${topic}: ${stats.correct}/${stats.total} (${pct}%)`;
+            }
+
+            // Show missed questions
             const missed = questionHistory.filter(q => !q.correct);
             if (missed.length > 0) {
                 report += `\n\n❌ QUESTIONS TO REVIEW
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
                 missed.forEach(q => {
-                    report += `\n• ${q.problem}${q.needsBorrow ? ' (borrowing)' : ''}`;
+                    report += `\n• ${q.problem}`;
                     report += `\n  Answered: ${q.userAnswer} → Correct: ${q.correctAnswer}`;
                 });
             }
@@ -915,6 +921,7 @@ https://ydgunz.github.io/fraction-frenzy/`;
             navigator.clipboard.writeText(report).then(() => {
                 alert('Report copied to clipboard!');
             }).catch(() => {
+                // Fallback
                 const textarea = document.createElement('textarea');
                 textarea.value = report;
                 document.body.appendChild(textarea);
@@ -927,11 +934,12 @@ https://ydgunz.github.io/fraction-frenzy/`;
 
         function emailReport() {
             const report = generateReportText();
-            const subject = encodeURIComponent(`Math Progress Report - Subtraction Showdown - ${new Date().toLocaleDateString()}`);
+            const subject = encodeURIComponent(`Math Progress Report - ${new Date().toLocaleDateString()}`);
             const body = encodeURIComponent(report);
             window.location.href = `mailto:?subject=${subject}&body=${body}`;
         }
 
+        // Close modal on outside click
         document.getElementById('report-modal').addEventListener('click', function(e) {
             if (e.target === this) closeReport();
         });
