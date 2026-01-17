@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraction Frenzy!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .question-type {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .question-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .question {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 5px;
+            font-size: 1em;
+        }
+
+        .numerator {
+            border-bottom: 3px solid #333;
+            padding: 0 10px 5px;
+            min-width: 40px;
+        }
+
+        .denominator {
+            padding: 5px 10px 0;
+            min-width: 40px;
+        }
+
+        .operator {
+            font-size: 1.2em;
+            margin: 0 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .answers {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .answer-btn {
+            padding: 20px;
+            font-size: 1.3em;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .answer-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .answer-btn.correct {
+            background: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+            animation: pulse 0.5s ease;
+        }
+
+        .answer-btn.incorrect {
+            background: #f44336;
+            border-color: #f44336;
+            color: white;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback.correct {
+            color: #4CAF50;
+        }
+
+        .feedback.incorrect {
+            color: #f44336;
+        }
+
+        .start-screen, .end-screen {
+            text-align: center;
+        }
+
+        .start-btn, .restart-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.3em;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .start-btn:hover, .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .instructions h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .instructions li {
+            margin: 8px 0;
+        }
+
+        .end-message {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .final-score {
+            font-size: 3em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .streak {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .streak-display {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #fff3cd;
+            border-radius: 15px;
+            color: #856404;
+            font-weight: bold;
+        }
+
+        .streak-display.hot {
+            background: #ff6b6b;
+            color: white;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #ff6b6b; }
+            to { box-shadow: 0 0 20px #ff6b6b; }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Fraction Frenzy!</h1>
+            <p class="subtitle">Master fractions one question at a time!</p>
+
+            <div class="instructions">
+                <h3>How to Play:</h3>
+                <ul>
+                    <li><strong>Compare fractions</strong> - Which one is bigger?</li>
+                    <li><strong>Add fractions</strong> - Find the sum!</li>
+                    <li><strong>Subtract fractions</strong> - Find the difference!</li>
+                    <li><strong>Simplify fractions</strong> - Reduce to lowest terms!</li>
+                    <li><strong>Equivalent fractions</strong> - Find the matching fraction!</li>
+                </ul>
+            </div>
+
+            <p>Answer 10 questions and see how many you can get right!</p>
+            <button class="start-btn" onclick="startGame()">Start Game!</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="hidden">
+            <h1>Fraction Frenzy!</h1>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="score">0</div>
+                    <div class="stat-label">Score</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="question-num">1</div>
+                    <div class="stat-label">Question</div>
+                </div>
+            </div>
+
+            <div class="streak" id="streak-container">
+                <span class="streak-display" id="streak-display">Streak: 0</span>
+            </div>
+
+            <div class="question-container">
+                <span class="question-type" id="question-type">Compare</span>
+                <div class="question" id="question"></div>
+            </div>
+
+            <div class="answers" id="answers"></div>
+
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+        <!-- End Screen -->
+        <div id="end-screen" class="end-screen hidden">
+            <h1>Game Over!</h1>
+            <div class="final-score" id="final-score">0/10</div>
+            <div class="end-message" id="end-message"></div>
+            <button class="restart-btn" onclick="startGame()">Play Again!</button>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let currentQuestion = 0;
+        let score = 0;
+        let streak = 0;
+        let maxStreak = 0;
+        let totalQuestions = 10;
+        let currentAnswer = null;
+        let answered = false;
+
+        // Utility functions
+        function gcd(a, b) {
+            a = Math.abs(a);
+            b = Math.abs(b);
+            while (b) {
+                [a, b] = [b, a % b];
+            }
+            return a;
+        }
+
+        function simplifyFraction(num, den) {
+            const divisor = gcd(num, den);
+            return [num / divisor, den / divisor];
+        }
+
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function fractionToDecimal(num, den) {
+            return num / den;
+        }
+
+        function createFractionHTML(num, den) {
+            return `<div class="fraction">
+                <span class="numerator">${num}</span>
+                <span class="denominator">${den}</span>
+            </div>`;
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Question generators
+        function generateCompareQuestion() {
+            let num1, den1, num2, den2;
+            do {
+                den1 = randomInt(2, 12);
+                num1 = randomInt(1, den1 - 1);
+                den2 = randomInt(2, 12);
+                num2 = randomInt(1, den2 - 1);
+            } while (fractionToDecimal(num1, den1) === fractionToDecimal(num2, den2));
+
+            const frac1Greater = fractionToDecimal(num1, den1) > fractionToDecimal(num2, den2);
+
+            return {
+                type: "Compare",
+                questionHTML: `Which is greater? ${createFractionHTML(num1, den1)} <span class="operator">or</span> ${createFractionHTML(num2, den2)}`,
+                answers: [
+                    { html: createFractionHTML(num1, den1), correct: frac1Greater },
+                    { html: createFractionHTML(num2, den2), correct: !frac1Greater },
+                    { html: "They are equal", correct: false },
+                    { html: "Can't compare", correct: false }
+                ]
+            };
+        }
+
+        function generateAddQuestion() {
+            const commonDen = randomInt(2, 10);
+            const num1 = randomInt(1, commonDen - 1);
+            const num2 = randomInt(1, commonDen - 1);
+            const resultNum = num1 + num2;
+            const [simpNum, simpDen] = simplifyFraction(resultNum, commonDen);
+
+            const wrongAnswers = [];
+            // Wrong answer 1: wrong operation
+            wrongAnswers.push(simplifyFraction(Math.abs(num1 - num2) || 1, commonDen));
+            // Wrong answer 2: added denominators too
+            wrongAnswers.push(simplifyFraction(num1 + num2, commonDen * 2));
+            // Wrong answer 3: random wrong
+            wrongAnswers.push(simplifyFraction(resultNum + randomInt(1, 3), commonDen));
+
+            return {
+                type: "Add",
+                questionHTML: `${createFractionHTML(num1, commonDen)} <span class="operator">+</span> ${createFractionHTML(num2, commonDen)} <span class="operator">=</span>`,
+                answers: shuffleArray([
+                    { html: createFractionHTML(simpNum, simpDen), correct: true },
+                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
+                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
+                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
+                ])
+            };
+        }
+
+        function generateSubtractQuestion() {
+            const commonDen = randomInt(2, 10);
+            let num1 = randomInt(2, commonDen);
+            let num2 = randomInt(1, num1 - 1);
+            const resultNum = num1 - num2;
+            const [simpNum, simpDen] = simplifyFraction(resultNum, commonDen);
+
+            const wrongAnswers = [];
+            wrongAnswers.push(simplifyFraction(num1 + num2, commonDen));
+            wrongAnswers.push(simplifyFraction(resultNum, commonDen * 2));
+            let wrongNum = resultNum + randomInt(1, 2);
+            if (wrongNum > commonDen) wrongNum = 1;
+            wrongAnswers.push(simplifyFraction(wrongNum, commonDen));
+
+            return {
+                type: "Subtract",
+                questionHTML: `${createFractionHTML(num1, commonDen)} <span class="operator">−</span> ${createFractionHTML(num2, commonDen)} <span class="operator">=</span>`,
+                answers: shuffleArray([
+                    { html: createFractionHTML(simpNum, simpDen), correct: true },
+                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
+                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
+                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
+                ])
+            };
+        }
+
+        function generateSimplifyQuestion() {
+            const simpNum = randomInt(1, 6);
+            const simpDen = randomInt(simpNum + 1, 10);
+            const [finalNum, finalDen] = simplifyFraction(simpNum, simpDen);
+
+            const multiplier = randomInt(2, 4);
+            const displayNum = finalNum * multiplier;
+            const displayDen = finalDen * multiplier;
+
+            const wrongAnswers = [];
+            wrongAnswers.push([displayNum, displayDen]); // Not simplified
+            wrongAnswers.push([finalDen, finalNum]); // Flipped
+            let wrongMult = multiplier === 2 ? 3 : 2;
+            wrongAnswers.push([finalNum * wrongMult, finalDen * wrongMult]); // Different multiple
+
+            return {
+                type: "Simplify",
+                questionHTML: `Simplify: ${createFractionHTML(displayNum, displayDen)}`,
+                answers: shuffleArray([
+                    { html: createFractionHTML(finalNum, finalDen), correct: true },
+                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
+                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
+                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
+                ])
+            };
+        }
+
+        function generateEquivalentQuestion() {
+            const num = randomInt(1, 5);
+            const den = randomInt(num + 1, 8);
+            const [simpNum, simpDen] = simplifyFraction(num, den);
+
+            const multiplier = randomInt(2, 5);
+            const equivNum = simpNum * multiplier;
+            const equivDen = simpDen * multiplier;
+
+            const wrongAnswers = [];
+            wrongAnswers.push([simpNum * multiplier, simpDen * (multiplier + 1)]);
+            wrongAnswers.push([simpNum * (multiplier + 1), simpDen * multiplier]);
+            wrongAnswers.push([simpNum + multiplier, simpDen + multiplier]);
+
+            return {
+                type: "Equivalent",
+                questionHTML: `Which fraction equals ${createFractionHTML(simpNum, simpDen)}?`,
+                answers: shuffleArray([
+                    { html: createFractionHTML(equivNum, equivDen), correct: true },
+                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
+                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
+                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
+                ])
+            };
+        }
+
+        function generateQuestion() {
+            const questionTypes = [
+                generateCompareQuestion,
+                generateAddQuestion,
+                generateSubtractQuestion,
+                generateSimplifyQuestion,
+                generateEquivalentQuestion
+            ];
+            const randomGenerator = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+            return randomGenerator();
+        }
+
+        function displayQuestion(question) {
+            document.getElementById('question-type').textContent = question.type;
+            document.getElementById('question').innerHTML = question.questionHTML;
+
+            const answersContainer = document.getElementById('answers');
+            answersContainer.innerHTML = '';
+
+            question.answers.forEach((answer, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.innerHTML = answer.html;
+                btn.onclick = () => checkAnswer(index, answer.correct, btn);
+                answersContainer.appendChild(btn);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            answered = false;
+        }
+
+        function checkAnswer(index, isCorrect, btn) {
+            if (answered) return;
+            answered = true;
+
+            const allBtns = document.querySelectorAll('.answer-btn');
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                score++;
+                streak++;
+                if (streak > maxStreak) maxStreak = streak;
+                document.getElementById('feedback').textContent = getPositiveFeedback();
+                document.getElementById('feedback').className = 'feedback correct';
+            } else {
+                btn.classList.add('incorrect');
+                streak = 0;
+                // Show correct answer
+                allBtns.forEach(b => {
+                    const answerIndex = Array.from(allBtns).indexOf(b);
+                    // We need to find the correct button differently
+                });
+                document.getElementById('feedback').textContent = "Not quite! Keep trying!";
+                document.getElementById('feedback').className = 'feedback incorrect';
+            }
+
+            updateStats();
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < totalQuestions) {
+                    displayQuestion(generateQuestion());
+                    document.getElementById('question-num').textContent = currentQuestion + 1;
+                    document.getElementById('progress-fill').style.width = ((currentQuestion + 1) / totalQuestions * 100) + '%';
+                } else {
+                    endGame();
+                }
+            }, 1500);
+        }
+
+        function getPositiveFeedback() {
+            const messages = [
+                "Excellent! 🎉",
+                "Great job! ⭐",
+                "You got it! 🌟",
+                "Perfect! 💯",
+                "Amazing! 🔥",
+                "Brilliant! ✨",
+                "Fantastic! 🎊",
+                "Superb! 👏"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        function updateStats() {
+            document.getElementById('score').textContent = score;
+            const streakDisplay = document.getElementById('streak-display');
+            streakDisplay.textContent = `Streak: ${streak}`;
+            if (streak >= 3) {
+                streakDisplay.classList.add('hot');
+            } else {
+                streakDisplay.classList.remove('hot');
+            }
+        }
+
+        function startGame() {
+            currentQuestion = 0;
+            score = 0;
+            streak = 0;
+            maxStreak = 0;
+
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+
+            document.getElementById('score').textContent = '0';
+            document.getElementById('question-num').textContent = '1';
+            document.getElementById('progress-fill').style.width = '10%';
+            updateStats();
+
+            displayQuestion(generateQuestion());
+        }
+
+        function endGame() {
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+
+            document.getElementById('final-score').textContent = `${score}/${totalQuestions}`;
+
+            let message = '';
+            const percentage = (score / totalQuestions) * 100;
+
+            if (percentage === 100) {
+                message = "PERFECT SCORE! You're a Fraction Master! 🏆";
+            } else if (percentage >= 80) {
+                message = "Awesome work! You really know your fractions! 🌟";
+            } else if (percentage >= 60) {
+                message = "Good job! Keep practicing to get even better! 👍";
+            } else if (percentage >= 40) {
+                message = "Nice effort! Practice makes perfect! 💪";
+            } else {
+                message = "Keep learning! You'll get better with practice! 📚";
+            }
+
+            if (maxStreak >= 3) {
+                message += ` (Best streak: ${maxStreak}!)`;
+            }
+
+            document.getElementById('end-message').textContent = message;
+        }
+    </script>
+</body>
+</html>
