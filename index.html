@@ -20,7 +20,7 @@
             justify-content: center;
             align-items: center;
             padding: 10px;
-            overflow: hidden;
+            overflow-y: auto;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
         }
 
@@ -468,104 +468,163 @@
         /* Mobile Responsive */
         @media (max-width: 480px) {
             body {
-                padding: 8px;
+                padding: 5px;
                 align-items: flex-start;
-                padding-top: 15px;
+                padding-top: 10px;
             }
 
             .game-container {
-                padding: 18px;
-                border-radius: 20px;
+                padding: 12px;
+                border-radius: 15px;
                 border-width: 3px;
             }
 
             .game-title {
-                font-size: 1.7rem;
+                font-size: 1.4rem;
+                margin-bottom: 2px;
             }
 
             .subtitle {
-                font-size: 0.85rem;
-                margin-bottom: 12px;
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
+
+            .timer-container {
+                margin-bottom: 8px;
             }
 
             .timer {
-                font-size: 3.2rem;
+                font-size: 2.5rem;
+            }
+
+            .timer-label {
+                font-size: 0.7rem;
             }
 
             .stats {
-                padding: 12px;
-                margin-bottom: 15px;
+                padding: 8px;
+                margin-bottom: 8px;
             }
 
             .stat-value {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
 
             .stat-label {
-                font-size: 0.65rem;
+                font-size: 0.6rem;
+            }
+
+            .difficulty-badge {
+                margin-bottom: 8px;
+            }
+
+            .difficulty-display {
+                padding: 3px 12px;
+                font-size: 0.7rem;
+            }
+
+            .question-container {
+                margin-bottom: 12px;
+            }
+
+            .question-type {
+                padding: 4px 12px;
+                font-size: 0.7rem;
+                margin-bottom: 8px;
             }
 
             .question {
-                font-size: 1.25rem;
-                min-height: 60px;
+                font-size: 1.1rem;
+                min-height: 50px;
             }
 
             .fraction {
-                padding: 6px 12px;
+                padding: 5px 10px;
             }
 
             .numerator, .denominator {
-                min-width: 28px;
-                font-size: 1.1rem;
+                min-width: 24px;
+                font-size: 1rem;
             }
 
             .answers {
-                gap: 10px;
+                gap: 8px;
+                margin-bottom: 8px;
             }
 
             .answer-btn {
-                padding: 15px 8px;
-                font-size: 1rem;
-                border-radius: 12px;
+                padding: 12px 6px;
+                font-size: 0.95rem;
+                border-radius: 10px;
+                border-width: 2px;
+            }
+
+            .streak-container {
+                min-height: 25px;
+            }
+
+            .streak-display {
+                font-size: 0.8rem;
+                padding: 3px 10px;
             }
 
             .start-btn, .restart-btn {
-                padding: 15px 40px;
-                font-size: 1.2rem;
+                padding: 12px 35px;
+                font-size: 1.1rem;
+                margin-top: 15px;
             }
 
             .instructions {
-                padding: 15px;
+                padding: 12px;
+                margin: 12px 0;
+            }
+
+            .instructions h3 {
+                font-size: 1rem;
+                margin-bottom: 8px;
             }
 
             .instructions li {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
+                margin: 5px 0;
             }
 
             .final-score {
-                font-size: 4rem;
+                font-size: 3.5rem;
             }
 
             .end-message {
-                font-size: 1.1rem;
+                font-size: 1rem;
+            }
+
+            .score-label {
+                font-size: 1rem;
+            }
+
+            #stats-summary {
+                font-size: 0.85rem;
             }
         }
 
         @media (max-width: 350px) {
             .game-title {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
 
             .timer {
-                font-size: 2.8rem;
+                font-size: 2.2rem;
             }
 
             .question {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
 
             .answer-btn {
-                padding: 12px 6px;
+                padding: 10px 5px;
+            }
+
+            .final-score {
+                font-size: 3rem;
             }
         }
 
