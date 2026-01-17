@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Mr. Gunther's Fraction Frenzy!</title>
+    <title>Mr. Gunther's Math Games</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap');
 
         * {
             margin: 0;
@@ -19,1191 +19,258 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px;
+            padding: 15px;
             overflow-y: auto;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
         }
 
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .floating-fraction {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.1;
-            color: #fff;
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100vh) rotate(360deg); }
-        }
-
-        .game-container {
+        .container {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 25px;
-            padding: 25px;
+            padding: 30px;
             max-width: 500px;
             width: 100%;
-            box-shadow:
-                0 0 60px rgba(255, 107, 107, 0.3),
-                0 0 100px rgba(78, 205, 196, 0.2),
-                0 25px 50px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 1;
-            border: 4px solid #ff6b6b;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
         }
 
-        .game-title {
+        .main-title {
             font-family: 'Nunito', sans-serif;
             text-align: center;
-            font-size: 1.9rem;
+            font-size: 2rem;
             font-weight: 800;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: #1a1a2e;
             text-shadow: 2px 2px 0px #feca57;
-            animation: titlePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes titlePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
         }
 
         .subtitle {
             text-align: center;
             color: #666;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             font-size: 1rem;
-            font-weight: 600;
         }
 
-        .timer-container {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .timer {
-            font-family: 'Bangers', cursive;
-            font-size: 4rem;
-            color: #4ecdc4;
-            text-shadow: 3px 3px 0 #1a1a2e;
-            transition: all 0.3s ease;
-        }
-
-        .timer.warning {
-            color: #feca57;
-            animation: timerShake 0.5s ease-in-out infinite;
-        }
-
-        .timer.danger {
-            color: #ff6b6b;
-            animation: timerShake 0.2s ease-in-out infinite;
-        }
-
-        @keyframes timerShake {
-            0%, 100% { transform: translateX(0) scale(1); }
-            25% { transform: translateX(-5px) scale(1.05); }
-            75% { transform: translateX(5px) scale(1.05); }
-        }
-
-        .timer-label {
-            font-size: 0.9rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .stats {
+        .games-grid {
             display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .game-card {
+            display: block;
+            text-decoration: none;
+            background: white;
             border-radius: 15px;
-        }
-
-        .stat {
-            text-align: center;
-            color: white;
-        }
-
-        .stat-value {
-            font-family: 'Bangers', cursive;
-            font-size: 2.2rem;
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.9;
-        }
-
-        .difficulty-badge {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .difficulty-display {
-            display: inline-block;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-weight: 800;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            padding: 20px;
+            border: 3px solid #e0e0e0;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .difficulty-display.easy {
-            background: linear-gradient(135deg, #4ecdc4, #44bd32);
-            color: white;
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .difficulty-display.medium {
-            background: linear-gradient(135deg, #feca57, #ff9f43);
-            color: #1a1a2e;
+        .game-card.kindergarten {
+            border-color: #4ecdc4;
+            background: linear-gradient(135deg, #e8faf9 0%, #ffffff 100%);
         }
 
-        .difficulty-display.hard {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            color: white;
-            animation: hardPulse 0.5s ease-in-out infinite;
+        .game-card.kindergarten:hover {
+            border-color: #3db9b1;
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3);
         }
 
-        .difficulty-display.insane {
-            background: linear-gradient(135deg, #8e44ad, #9b59b6, #3498db);
-            color: white;
-            animation: insanePulse 0.3s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(142, 68, 173, 0.5);
+        .game-card.second-grade {
+            border-color: #ff9f43;
+            background: linear-gradient(135deg, #fff5eb 0%, #ffffff 100%);
         }
 
-        @keyframes hardPulse {
-            0%, 100% { box-shadow: 0 0 10px rgba(255, 107, 107, 0.5); }
-            50% { box-shadow: 0 0 25px rgba(255, 107, 107, 0.8); }
+        .game-card.second-grade:hover {
+            border-color: #e68a2e;
+            box-shadow: 0 10px 30px rgba(255, 159, 67, 0.3);
         }
 
-        @keyframes insanePulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(142, 68, 173, 0.5); }
-            50% { transform: scale(1.05); box-shadow: 0 0 35px rgba(142, 68, 173, 0.8); }
+        .game-card.sixth-grade {
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, #ffefef 0%, #ffffff 100%);
         }
 
-        .question-type {
-            text-align: center;
-            background: #1a1a2e;
-            color: #4ecdc4;
-            padding: 6px 18px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 15px;
-            font-weight: 800;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .game-card.sixth-grade:hover {
+            border-color: #e55555;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
         }
 
-        .question-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .question {
-            font-size: 1.5rem;
-            color: #1a1a2e;
-            margin-bottom: 10px;
-            min-height: 70px;
+        .game-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1a1a2e;
+        }
+
+        .grade-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .kindergarten .grade-badge {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .second-grade .grade-badge {
+            background: #ff9f43;
+            color: white;
+        }
+
+        .sixth-grade .grade-badge {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .game-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .game-skills {
+            display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            font-weight: 800;
         }
 
-        .fraction {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0 5px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 8px 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .numerator {
-            border-bottom: 3px solid #1a1a2e;
-            padding: 0 8px 4px;
-            min-width: 35px;
-            font-weight: 800;
-        }
-
-        .denominator {
-            padding: 4px 8px 0;
-            min-width: 35px;
-            font-weight: 800;
-        }
-
-        .operator {
-            font-size: 1.4rem;
-            color: #ff6b6b;
-            font-weight: 800;
-        }
-
-        .answers {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .answer-btn {
-            padding: 18px 10px;
-            font-size: 1.1rem;
-            border: 3px solid #e0e0e0;
-            border-radius: 15px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 800;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .answer-btn:hover {
-            border-color: #4ecdc4;
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.3);
-        }
-
-        .answer-btn:active {
-            transform: scale(0.98);
-        }
-
-        .answer-btn.correct {
-            background: linear-gradient(135deg, #4ecdc4, #44bd32);
-            border-color: #44bd32;
-            color: white;
-            animation: correctPop 0.4s ease;
-        }
-
-        .answer-btn.incorrect {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            border-color: #ee5a24;
-            color: white;
-            animation: shake 0.4s ease;
-        }
-
-        @keyframes correctPop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-10px); }
-            40% { transform: translateX(10px); }
-            60% { transform: translateX(-10px); }
-            80% { transform: translateX(10px); }
-        }
-
-        .streak-container {
-            text-align: center;
-            min-height: 35px;
-        }
-
-        .streak-display {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .streak-display.normal {
+        .skill-tag {
             background: #f0f0f0;
-            color: #666;
-        }
-
-        .streak-display.hot {
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
-            color: white;
-            animation: streakFire 0.5s ease-in-out infinite alternate;
-        }
-
-        .streak-display.blazing {
-            background: linear-gradient(135deg, #8e44ad, #e74c3c, #f39c12);
-            color: white;
-            animation: blazingStreak 0.3s ease-in-out infinite;
-            box-shadow: 0 0 30px rgba(231, 76, 60, 0.6);
-        }
-
-        @keyframes streakFire {
-            from { transform: scale(1); }
-            to { transform: scale(1.05); }
-        }
-
-        @keyframes blazingStreak {
-            0%, 100% { transform: scale(1) rotate(-1deg); }
-            50% { transform: scale(1.08) rotate(1deg); }
-        }
-
-        .start-screen, .end-screen {
-            text-align: center;
-        }
-
-        .start-btn, .restart-btn {
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
-            color: #1a1a2e;
-            border: none;
-            padding: 18px 50px;
-            font-size: 1.4rem;
-            font-family: 'Bangers', cursive;
-            letter-spacing: 2px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-        }
-
-        .start-btn:hover, .restart-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5);
-        }
-
-        .start-btn:active, .restart-btn:active {
-            transform: scale(0.98);
-        }
-
-        .instructions {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: left;
-            border-left: 5px solid #4ecdc4;
-        }
-
-        .instructions h3 {
-            color: #1a1a2e;
-            margin-bottom: 12px;
-            font-size: 1.1rem;
-        }
-
-        .instructions ul {
-            margin-left: 20px;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
             color: #555;
         }
 
-        .instructions li {
-            margin: 8px 0;
-            font-size: 0.95rem;
-        }
-
-        .end-message {
-            font-size: 1.3rem;
-            margin: 15px 0;
-            color: #1a1a2e;
+        .play-prompt {
+            text-align: right;
+            margin-top: 12px;
             font-weight: 800;
+            font-size: 0.9rem;
+            color: #888;
         }
 
-        .final-score {
-            font-family: 'Bangers', cursive;
-            font-size: 5rem;
-            background: linear-gradient(135deg, #ff6b6b, #feca57, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none;
-            animation: scoreReveal 0.5s ease-out;
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #888;
+            font-size: 0.85rem;
         }
 
-        @keyframes scoreReveal {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .score-label {
-            font-size: 1.2rem;
-            color: #666;
-            margin-top: -10px;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .confetti {
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            top: -20px;
-            animation: confettiFall 3s linear forwards;
-            z-index: 1000;
-        }
-
-        @keyframes confettiFall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-
-        /* Mobile Responsive */
+        /* Mobile */
         @media (max-width: 480px) {
             body {
-                padding: 5px;
+                padding: 10px;
                 align-items: flex-start;
-                padding-top: 10px;
+                padding-top: 15px;
             }
 
-            .game-container {
-                padding: 12px;
-                border-radius: 15px;
-                border-width: 3px;
+            .container {
+                padding: 20px;
             }
 
-            .game-title {
-                font-size: 1.4rem;
-                margin-bottom: 2px;
+            .main-title {
+                font-size: 1.6rem;
             }
 
             .subtitle {
-                font-size: 0.8rem;
-                margin-bottom: 8px;
+                font-size: 0.9rem;
+                margin-bottom: 20px;
             }
 
-            .timer-container {
-                margin-bottom: 8px;
+            .game-card {
+                padding: 15px;
             }
 
-            .timer {
-                font-size: 2.5rem;
-            }
-
-            .timer-label {
-                font-size: 0.7rem;
-            }
-
-            .stats {
-                padding: 8px;
-                margin-bottom: 8px;
-            }
-
-            .stat-value {
-                font-size: 1.5rem;
-            }
-
-            .stat-label {
-                font-size: 0.6rem;
-            }
-
-            .difficulty-badge {
-                margin-bottom: 8px;
-            }
-
-            .difficulty-display {
-                padding: 3px 12px;
-                font-size: 0.7rem;
-            }
-
-            .question-container {
-                margin-bottom: 12px;
-            }
-
-            .question-type {
-                padding: 4px 12px;
-                font-size: 0.7rem;
-                margin-bottom: 8px;
-            }
-
-            .question {
+            .game-title {
                 font-size: 1.1rem;
-                min-height: 50px;
             }
 
-            .fraction {
-                padding: 5px 10px;
+            .grade-badge {
+                padding: 4px 10px;
+                font-size: 0.7rem;
             }
 
-            .numerator, .denominator {
-                min-width: 24px;
-                font-size: 1rem;
-            }
-
-            .answers {
-                gap: 8px;
-                margin-bottom: 8px;
-            }
-
-            .answer-btn {
-                padding: 12px 6px;
-                font-size: 0.95rem;
-                border-radius: 10px;
-                border-width: 2px;
-            }
-
-            .streak-container {
-                min-height: 25px;
-            }
-
-            .streak-display {
-                font-size: 0.8rem;
-                padding: 3px 10px;
-            }
-
-            .start-btn, .restart-btn {
-                padding: 12px 35px;
-                font-size: 1.1rem;
-                margin-top: 15px;
-            }
-
-            .instructions {
-                padding: 12px;
-                margin: 12px 0;
-            }
-
-            .instructions h3 {
-                font-size: 1rem;
-                margin-bottom: 8px;
-            }
-
-            .instructions li {
-                font-size: 0.8rem;
-                margin: 5px 0;
-            }
-
-            .final-score {
-                font-size: 3.5rem;
-            }
-
-            .end-message {
-                font-size: 1rem;
-            }
-
-            .score-label {
-                font-size: 1rem;
-            }
-
-            #stats-summary {
+            .game-description {
                 font-size: 0.85rem;
             }
-        }
 
-        @media (max-width: 350px) {
-            .game-title {
-                font-size: 1.2rem;
+            .skill-tag {
+                font-size: 0.7rem;
             }
-
-            .timer {
-                font-size: 2.2rem;
-            }
-
-            .question {
-                font-size: 1rem;
-            }
-
-            .answer-btn {
-                padding: 10px 5px;
-            }
-
-            .final-score {
-                font-size: 3rem;
-            }
-        }
-
-        /* Prevent text selection on game elements */
-        .answer-btn, .start-btn, .restart-btn {
-            user-select: none;
-            -webkit-user-select: none;
         }
     </style>
 </head>
 <body>
-    <div class="bg-animation" id="bg-animation"></div>
+    <div class="container">
+        <h1 class="main-title">Mr. Gunther's Math Games</h1>
+        <p class="subtitle">Pick a game and start practicing!</p>
 
-    <div class="game-container">
-        <!-- Start Screen -->
-        <div id="start-screen" class="start-screen">
-            <h1 class="game-title">Mr. Gunther's Fraction Frenzy!</h1>
-            <p class="subtitle">How many can YOU solve in 60 seconds?!</p>
+        <div class="games-grid">
+            <a href="addition-adventure.html" class="game-card kindergarten">
+                <div class="game-header">
+                    <span class="game-title">Addition Adventure</span>
+                    <span class="grade-badge">Kindergarten</span>
+                </div>
+                <p class="game-description">Learn to add numbers together! Start with small numbers and work your way up.</p>
+                <div class="game-skills">
+                    <span class="skill-tag">Adding 1-10</span>
+                    <span class="skill-tag">Number sense</span>
+                    <span class="skill-tag">Counting</span>
+                </div>
+                <div class="play-prompt">Tap to play →</div>
+            </a>
 
-            <div class="instructions">
-                <h3>🎮 How to Play:</h3>
-                <ul>
-                    <li>⏱️ You have <strong>60 SECONDS</strong> on the clock!</li>
-                    <li>🧮 Answer as many fraction questions as you can!</li>
-                    <li>📈 Questions get <strong>HARDER</strong> as you go!</li>
-                    <li>🔥 Build streaks for BONUS POINTS!</li>
-                    <li>🏆 Beat your high score!</li>
-                </ul>
-            </div>
+            <a href="subtraction-showdown.html" class="game-card second-grade">
+                <div class="game-header">
+                    <span class="game-title">Subtraction Showdown</span>
+                    <span class="grade-badge">2nd Grade</span>
+                </div>
+                <p class="game-description">Master subtraction with borrowing! Practice the standard algorithm with multi-digit numbers.</p>
+                <div class="game-skills">
+                    <span class="skill-tag">2-digit subtraction</span>
+                    <span class="skill-tag">Regrouping</span>
+                    <span class="skill-tag">Borrowing</span>
+                </div>
+                <div class="play-prompt">Tap to play →</div>
+            </a>
 
-            <button class="start-btn" onclick="startGame()">LET'S GO!</button>
+            <a href="fraction-frenzy.html" class="game-card sixth-grade">
+                <div class="game-header">
+                    <span class="game-title">Fraction Frenzy</span>
+                    <span class="grade-badge">6th Grade</span>
+                </div>
+                <p class="game-description">Race against the clock! Compare, add, subtract, and simplify fractions as fast as you can.</p>
+                <div class="game-skills">
+                    <span class="skill-tag">Comparing fractions</span>
+                    <span class="skill-tag">Add & subtract</span>
+                    <span class="skill-tag">Simplifying</span>
+                </div>
+                <div class="play-prompt">Tap to play →</div>
+            </a>
         </div>
 
-        <!-- Game Screen -->
-        <div id="game-screen" class="hidden">
-            <h1 class="game-title">Mr. Gunther's Fraction Frenzy!</h1>
-
-            <div class="timer-container">
-                <div class="timer" id="timer">60</div>
-                <div class="timer-label">seconds left</div>
-            </div>
-
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-value" id="score">0</div>
-                    <div class="stat-label">Score</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value" id="correct-count">0</div>
-                    <div class="stat-label">Correct</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value" id="streak">0</div>
-                    <div class="stat-label">Streak</div>
-                </div>
-            </div>
-
-            <div class="difficulty-badge">
-                <span class="difficulty-display easy" id="difficulty-display">EASY</span>
-            </div>
-
-            <div class="question-container">
-                <span class="question-type" id="question-type">Compare</span>
-                <div class="question" id="question"></div>
-            </div>
-
-            <div class="answers" id="answers"></div>
-
-            <div class="streak-container">
-                <span class="streak-display normal hidden" id="streak-message"></span>
-            </div>
-        </div>
-
-        <!-- End Screen -->
-        <div id="end-screen" class="end-screen hidden">
-            <h1 class="game-title">TIME'S UP!</h1>
-            <div class="final-score" id="final-score">0</div>
-            <div class="score-label">POINTS</div>
-            <div class="end-message" id="end-message"></div>
-            <div id="stats-summary" style="margin: 15px 0; color: #666;"></div>
-            <button class="restart-btn" onclick="startGame()">PLAY AGAIN!</button>
+        <div class="footer">
+            Made with ❤️ for learning math
         </div>
     </div>
-
-    <script>
-        // Game state
-        let score = 0;
-        let correctCount = 0;
-        let streak = 0;
-        let maxStreak = 0;
-        let timeLeft = 60;
-        let timerInterval = null;
-        let answered = false;
-        let difficulty = 1; // 1 = easy, 2 = medium, 3 = hard, 4 = insane
-        let questionsAnswered = 0;
-
-        // Create floating background fractions
-        function createBackgroundFractions() {
-            const bg = document.getElementById('bg-animation');
-            const fractions = ['½', '¼', '¾', '⅓', '⅔', '⅛', '⅜', '⅝', '⅞', '⅕', '⅖', '⅗'];
-
-            for (let i = 0; i < 15; i++) {
-                const span = document.createElement('span');
-                span.className = 'floating-fraction';
-                span.textContent = fractions[Math.floor(Math.random() * fractions.length)];
-                span.style.left = Math.random() * 100 + '%';
-                span.style.animationDuration = (15 + Math.random() * 20) + 's';
-                span.style.animationDelay = Math.random() * 20 + 's';
-                bg.appendChild(span);
-            }
-        }
-
-        createBackgroundFractions();
-
-        // Utility functions
-        function gcd(a, b) {
-            a = Math.abs(a);
-            b = Math.abs(b);
-            while (b) {
-                [a, b] = [b, a % b];
-            }
-            return a;
-        }
-
-        function simplifyFraction(num, den) {
-            if (den === 0) return [num, 1];
-            const divisor = gcd(num, den);
-            return [num / divisor, den / divisor];
-        }
-
-        function randomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
-        function fractionToDecimal(num, den) {
-            return num / den;
-        }
-
-        function createFractionHTML(num, den) {
-            return `<div class="fraction">
-                <span class="numerator">${num}</span>
-                <span class="denominator">${den}</span>
-            </div>`;
-        }
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        // Difficulty settings
-        function getDifficultySettings() {
-            switch(difficulty) {
-                case 1: // Easy
-                    return { denRange: [2, 6], numRange: [1, 5], operations: ['compare', 'equivalent'] };
-                case 2: // Medium
-                    return { denRange: [2, 10], numRange: [1, 9], operations: ['compare', 'add', 'subtract', 'equivalent'] };
-                case 3: // Hard
-                    return { denRange: [2, 12], numRange: [1, 11], operations: ['compare', 'add', 'subtract', 'simplify', 'equivalent'] };
-                case 4: // Insane
-                    return { denRange: [3, 15], numRange: [1, 14], operations: ['add', 'subtract', 'simplify', 'multiply', 'addDifferent'] };
-                default:
-                    return { denRange: [2, 6], numRange: [1, 5], operations: ['compare', 'equivalent'] };
-            }
-        }
-
-        function updateDifficulty() {
-            const oldDifficulty = difficulty;
-
-            if (correctCount >= 20) {
-                difficulty = 4;
-            } else if (correctCount >= 12) {
-                difficulty = 3;
-            } else if (correctCount >= 5) {
-                difficulty = 2;
-            } else {
-                difficulty = 1;
-            }
-
-            const display = document.getElementById('difficulty-display');
-            display.classList.remove('easy', 'medium', 'hard', 'insane');
-
-            switch(difficulty) {
-                case 1:
-                    display.textContent = '🟢 EASY';
-                    display.classList.add('easy');
-                    break;
-                case 2:
-                    display.textContent = '🟡 MEDIUM';
-                    display.classList.add('medium');
-                    break;
-                case 3:
-                    display.textContent = '🟠 HARD';
-                    display.classList.add('hard');
-                    break;
-                case 4:
-                    display.textContent = '🔴 INSANE';
-                    display.classList.add('insane');
-                    break;
-            }
-
-            if (difficulty > oldDifficulty) {
-                display.style.transform = 'scale(1.3)';
-                setTimeout(() => display.style.transform = 'scale(1)', 300);
-            }
-        }
-
-        // Question generators
-        function generateCompareQuestion() {
-            const settings = getDifficultySettings();
-            let num1, den1, num2, den2;
-            do {
-                den1 = randomInt(...settings.denRange);
-                num1 = randomInt(1, den1 - 1);
-                den2 = randomInt(...settings.denRange);
-                num2 = randomInt(1, den2 - 1);
-            } while (fractionToDecimal(num1, den1) === fractionToDecimal(num2, den2));
-
-            const frac1Greater = fractionToDecimal(num1, den1) > fractionToDecimal(num2, den2);
-
-            return {
-                type: "Compare",
-                questionHTML: `Which is greater?<br>${createFractionHTML(num1, den1)} <span class="operator">or</span> ${createFractionHTML(num2, den2)}`,
-                answers: shuffleArray([
-                    { html: createFractionHTML(num1, den1), correct: frac1Greater },
-                    { html: createFractionHTML(num2, den2), correct: !frac1Greater }
-                ])
-            };
-        }
-
-        function generateAddQuestion() {
-            const settings = getDifficultySettings();
-            const commonDen = randomInt(...settings.denRange);
-            const num1 = randomInt(1, Math.min(commonDen - 1, 8));
-            const num2 = randomInt(1, Math.min(commonDen - 1, 8));
-            const resultNum = num1 + num2;
-            const [simpNum, simpDen] = simplifyFraction(resultNum, commonDen);
-
-            const wrongAnswers = [];
-            wrongAnswers.push(simplifyFraction(Math.abs(num1 - num2) || 1, commonDen));
-            wrongAnswers.push([num1 + num2, commonDen * 2]);
-            wrongAnswers.push(simplifyFraction(resultNum + randomInt(1, 2), commonDen));
-
-            return {
-                type: "Add",
-                questionHTML: `${createFractionHTML(num1, commonDen)} <span class="operator">+</span> ${createFractionHTML(num2, commonDen)}`,
-                answers: shuffleArray([
-                    { html: createFractionHTML(simpNum, simpDen), correct: true },
-                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
-                ])
-            };
-        }
-
-        function generateAddDifferentDenQuestion() {
-            const den1 = randomInt(2, 6);
-            const den2 = randomInt(2, 6);
-            const num1 = randomInt(1, den1 - 1);
-            const num2 = randomInt(1, den2 - 1);
-
-            const commonDen = den1 * den2 / gcd(den1, den2);
-            const newNum1 = num1 * (commonDen / den1);
-            const newNum2 = num2 * (commonDen / den2);
-            const resultNum = newNum1 + newNum2;
-            const [simpNum, simpDen] = simplifyFraction(resultNum, commonDen);
-
-            const wrongAnswers = [];
-            wrongAnswers.push([num1 + num2, den1 + den2]);
-            wrongAnswers.push([num1 + num2, den1 * den2]);
-            wrongAnswers.push(simplifyFraction(resultNum + randomInt(1, 3), commonDen));
-
-            return {
-                type: "Add (Different)",
-                questionHTML: `${createFractionHTML(num1, den1)} <span class="operator">+</span> ${createFractionHTML(num2, den2)}`,
-                answers: shuffleArray([
-                    { html: createFractionHTML(simpNum, simpDen), correct: true },
-                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
-                ])
-            };
-        }
-
-        function generateSubtractQuestion() {
-            const settings = getDifficultySettings();
-            const commonDen = randomInt(...settings.denRange);
-            let num1 = randomInt(2, commonDen);
-            let num2 = randomInt(1, num1 - 1);
-            const resultNum = num1 - num2;
-            const [simpNum, simpDen] = simplifyFraction(resultNum, commonDen);
-
-            const wrongAnswers = [];
-            wrongAnswers.push(simplifyFraction(num1 + num2, commonDen));
-            wrongAnswers.push([resultNum, commonDen * 2]);
-            let wrongNum = Math.abs(resultNum - randomInt(1, 2));
-            if (wrongNum === 0) wrongNum = resultNum + 1;
-            wrongAnswers.push(simplifyFraction(wrongNum, commonDen));
-
-            return {
-                type: "Subtract",
-                questionHTML: `${createFractionHTML(num1, commonDen)} <span class="operator">−</span> ${createFractionHTML(num2, commonDen)}`,
-                answers: shuffleArray([
-                    { html: createFractionHTML(simpNum, simpDen), correct: true },
-                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
-                ])
-            };
-        }
-
-        function generateSimplifyQuestion() {
-            const simpNum = randomInt(1, 5);
-            const simpDen = randomInt(simpNum + 1, 8);
-            const [finalNum, finalDen] = simplifyFraction(simpNum, simpDen);
-
-            const multiplier = randomInt(2, 4);
-            const displayNum = finalNum * multiplier;
-            const displayDen = finalDen * multiplier;
-
-            const wrongAnswers = [];
-            wrongAnswers.push([displayNum, displayDen]);
-            wrongAnswers.push([finalDen, finalNum]);
-            let wrongMult = multiplier === 2 ? 3 : 2;
-            wrongAnswers.push([finalNum * wrongMult, finalDen * wrongMult]);
-
-            return {
-                type: "Simplify",
-                questionHTML: `Simplify: ${createFractionHTML(displayNum, displayDen)}`,
-                answers: shuffleArray([
-                    { html: createFractionHTML(finalNum, finalDen), correct: true },
-                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
-                ])
-            };
-        }
-
-        function generateEquivalentQuestion() {
-            const num = randomInt(1, 4);
-            const den = randomInt(num + 1, 6);
-            const [simpNum, simpDen] = simplifyFraction(num, den);
-
-            const multiplier = randomInt(2, 4);
-            const equivNum = simpNum * multiplier;
-            const equivDen = simpDen * multiplier;
-
-            const wrongAnswers = [];
-            wrongAnswers.push([simpNum * multiplier, simpDen * (multiplier + 1)]);
-            wrongAnswers.push([simpNum * (multiplier + 1), simpDen * multiplier]);
-            wrongAnswers.push([simpNum + 1, simpDen + 1]);
-
-            return {
-                type: "Equivalent",
-                questionHTML: `Which equals ${createFractionHTML(simpNum, simpDen)}?`,
-                answers: shuffleArray([
-                    { html: createFractionHTML(equivNum, equivDen), correct: true },
-                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
-                ])
-            };
-        }
-
-        function generateMultiplyQuestion() {
-            const num1 = randomInt(1, 4);
-            const den1 = randomInt(2, 5);
-            const num2 = randomInt(1, 4);
-            const den2 = randomInt(2, 5);
-
-            const resultNum = num1 * num2;
-            const resultDen = den1 * den2;
-            const [simpNum, simpDen] = simplifyFraction(resultNum, resultDen);
-
-            const wrongAnswers = [];
-            wrongAnswers.push([num1 * num2, den1 + den2]);
-            wrongAnswers.push([num1 + num2, den1 * den2]);
-            wrongAnswers.push(simplifyFraction(resultNum + 1, resultDen));
-
-            return {
-                type: "Multiply",
-                questionHTML: `${createFractionHTML(num1, den1)} <span class="operator">×</span> ${createFractionHTML(num2, den2)}`,
-                answers: shuffleArray([
-                    { html: createFractionHTML(simpNum, simpDen), correct: true },
-                    { html: createFractionHTML(wrongAnswers[0][0], wrongAnswers[0][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[1][0], wrongAnswers[1][1]), correct: false },
-                    { html: createFractionHTML(wrongAnswers[2][0], wrongAnswers[2][1]), correct: false }
-                ])
-            };
-        }
-
-        function generateQuestion() {
-            const settings = getDifficultySettings();
-            const operations = settings.operations;
-            const operation = operations[Math.floor(Math.random() * operations.length)];
-
-            switch(operation) {
-                case 'compare': return generateCompareQuestion();
-                case 'add': return generateAddQuestion();
-                case 'subtract': return generateSubtractQuestion();
-                case 'simplify': return generateSimplifyQuestion();
-                case 'equivalent': return generateEquivalentQuestion();
-                case 'multiply': return generateMultiplyQuestion();
-                case 'addDifferent': return generateAddDifferentDenQuestion();
-                default: return generateCompareQuestion();
-            }
-        }
-
-        function displayQuestion(question) {
-            document.getElementById('question-type').textContent = question.type;
-            document.getElementById('question').innerHTML = question.questionHTML;
-
-            const answersContainer = document.getElementById('answers');
-            answersContainer.innerHTML = '';
-
-            question.answers.forEach((answer, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'answer-btn';
-                btn.innerHTML = answer.html;
-                btn.onclick = () => checkAnswer(answer.correct, btn);
-                answersContainer.appendChild(btn);
-            });
-
-            answered = false;
-        }
-
-        function checkAnswer(isCorrect, btn) {
-            if (answered || timeLeft <= 0) return;
-            answered = true;
-            questionsAnswered++;
-
-            if (isCorrect) {
-                btn.classList.add('correct');
-                correctCount++;
-                streak++;
-                if (streak > maxStreak) maxStreak = streak;
-
-                // Score calculation with streak bonus
-                let points = 10;
-                if (streak >= 5) points = 25;
-                else if (streak >= 3) points = 15;
-
-                // Difficulty bonus
-                points += (difficulty - 1) * 5;
-
-                score += points;
-
-                updateStreakDisplay();
-                updateDifficulty();
-            } else {
-                btn.classList.add('incorrect');
-                streak = 0;
-                updateStreakDisplay();
-            }
-
-            updateStats();
-
-            setTimeout(() => {
-                if (timeLeft > 0) {
-                    displayQuestion(generateQuestion());
-                }
-            }, 400);
-        }
-
-        function updateStreakDisplay() {
-            const streakMessage = document.getElementById('streak-message');
-
-            if (streak >= 5) {
-                streakMessage.textContent = `🔥🔥🔥 ${streak}x BLAZING! 🔥🔥🔥`;
-                streakMessage.className = 'streak-display blazing';
-                streakMessage.classList.remove('hidden');
-            } else if (streak >= 3) {
-                streakMessage.textContent = `🔥 ${streak}x ON FIRE! 🔥`;
-                streakMessage.className = 'streak-display hot';
-                streakMessage.classList.remove('hidden');
-            } else {
-                streakMessage.classList.add('hidden');
-            }
-        }
-
-        function updateStats() {
-            document.getElementById('score').textContent = score;
-            document.getElementById('correct-count').textContent = correctCount;
-            document.getElementById('streak').textContent = streak;
-        }
-
-        function updateTimer() {
-            timeLeft--;
-            const timerEl = document.getElementById('timer');
-            timerEl.textContent = timeLeft;
-
-            timerEl.classList.remove('warning', 'danger');
-            if (timeLeft <= 10) {
-                timerEl.classList.add('danger');
-            } else if (timeLeft <= 20) {
-                timerEl.classList.add('warning');
-            }
-
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                endGame();
-            }
-        }
-
-        function startGame() {
-            score = 0;
-            correctCount = 0;
-            streak = 0;
-            maxStreak = 0;
-            timeLeft = 60;
-            difficulty = 1;
-            questionsAnswered = 0;
-            answered = false;
-
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('end-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-
-            updateStats();
-            updateDifficulty();
-            document.getElementById('timer').textContent = '60';
-            document.getElementById('timer').classList.remove('warning', 'danger');
-            document.getElementById('streak-message').classList.add('hidden');
-
-            displayQuestion(generateQuestion());
-
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-
-        function createConfetti() {
-            const colors = ['#ff6b6b', '#feca57', '#4ecdc4', '#ff9ff3', '#54a0ff', '#5f27cd'];
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                    document.body.appendChild(confetti);
-                    setTimeout(() => confetti.remove(), 3000);
-                }, i * 50);
-            }
-        }
-
-        function endGame() {
-            document.getElementById('game-screen').classList.add('hidden');
-            document.getElementById('end-screen').classList.remove('hidden');
-
-            document.getElementById('final-score').textContent = score;
-
-            const accuracy = questionsAnswered > 0 ? Math.round((correctCount / questionsAnswered) * 100) : 0;
-
-            let message = '';
-            if (score >= 300) {
-                message = "🏆 LEGENDARY! You're a FRACTION WIZARD! 🧙‍♂️";
-                createConfetti();
-            } else if (score >= 200) {
-                message = "🌟 AMAZING! Mr. Gunther is impressed! 🌟";
-                createConfetti();
-            } else if (score >= 150) {
-                message = "🎉 GREAT JOB! You're getting good at this!";
-            } else if (score >= 100) {
-                message = "👍 Nice work! Keep practicing!";
-            } else if (score >= 50) {
-                message = "💪 Good effort! You're learning!";
-            } else {
-                message = "📚 Keep trying! Practice makes perfect!";
-            }
-
-            document.getElementById('end-message').textContent = message;
-            document.getElementById('stats-summary').innerHTML = `
-                ✅ ${correctCount} correct out of ${questionsAnswered} (${accuracy}% accuracy)<br>
-                🔥 Best streak: ${maxStreak}
-            `;
-        }
-    </script>
 </body>
 </html>
